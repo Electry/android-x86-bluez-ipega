@@ -3401,8 +3401,8 @@ static void read_info_complete(uint8_t status, uint16_t length,
 		store_adapter_config();
 	} else if (bacmp(&adapter.bdaddr, &rp->bdaddr)) {
 		error("Bluetooth address mismatch");
-		err = -ENODEV;
-		goto failed;
+		bacpy(&adapter.bdaddr, &rp->bdaddr);
+		store_adapter_config();
 	}
 
 	if (adapter.name && g_strcmp0(adapter.name, (const char *) rp->name))
